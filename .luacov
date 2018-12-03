@@ -1,0 +1,6 @@
+modules = {
+   ["timerwheel"] = "src/timerwheel.lua",
+   ["timerwheel.*"] = "src"
+}
+runreport = true
+deletestats = false  -- file still needed to push to coveralls

@@ -1,0 +1,272 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>timerwheel</title>
+    <link rel="stylesheet" href="ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>timerwheel.lua</h1>
+
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><strong>timerwheel</strong></li>
+</ul>
+<h2>Topics</h2>
+<ul class="">
+  <li><a href="topics/readme.md.html">readme</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>timerwheel</code></h1>
+<p>Timer wheel implementation</p>
+
+<p> Efficient timer for timeout related timers: fast insertion, deletion, and
+ execution (all as O(1) implemented), but with lesser precision.</p>
+<p> This module will not provide the timer/runloop itself. Use your own runloop
+ and call <a href="index.html#wheel:step">wheel:step</a> to check and execute timers.</p>
+
+<p> Implementation:
+ Consider a stack of rings, a timer beyond the current ring size is in the
+ next ring (or beyond). Precision is based on a slot with a specific size.</p>
+
+<p> The code explicitly avoids using <a href="https://www.lua.org/manual/5.1/manual.html#pdf-pairs">pairs</a>, <a href="https://www.lua.org/manual/5.1/manual.html#pdf-ipairs">ipairs</a> and <a href="https://www.lua.org/manual/5.1/manual.html#pdf-next">next</a> to ensure JIT
+ compilation when using LuaJIT</p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#new">new (opts)</a></td>
+	<td class="summary">Creates a new timer wheel.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#wheel:cancel">wheel:cancel (id)</a></td>
+	<td class="summary">Cancels a timer.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#wheel:peek">wheel:peek (max_ahead)</a></td>
+	<td class="summary">Looks up the next expiring timer.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#wheel:set">wheel:set (expire_in, cb, arg)</a></td>
+	<td class="summary">Sets a timer.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#wheel:step">wheel:step ()</a></td>
+	<td class="summary">Checks and executes timers.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Functions"></a>Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "new"></a>
+    <strong>new (opts)</strong>
+    </dt>
+    <dd>
+
+<p>Creates a new timer wheel.
+ The options are:</p>
+
+<ul>
+    <li><code>precision</code> (optional) precision of the timer wheel in seconds (slot size),
+    defaults to 0.050</li>
+    <li><code>ringsize</code> (optional) number of slots in each ring, defaults to 72000 (1
+    hour span, based on default <code>precision</code>)</li>
+    <li><code>now</code> (optional) a function returning the curent time in seconds. Defaults
+    to <code>luasocket.gettime</code> or <code>ngx.now</code> if available.</li>
+    <li><code>err_handler</code> (optional) a function to use as error handler in a <a href="https://www.lua.org/manual/5.1/manual.html#pdf-xpcall">xpcall</a> when
+    executing the callback. The default will send the stacktrace on <code>stderr</code>.</li>
+</ul>
+
+
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">opts</span>
+         the options table
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        the timerwheel object
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "wheel:cancel"></a>
+    <strong>wheel:cancel (id)</strong>
+    </dt>
+    <dd>
+    Cancels a timer.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">id</span>
+         the timer id to cancel
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        <code>true</code> if cancelled, <code>false</code> if not found
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "wheel:peek"></a>
+    <strong>wheel:peek (max_ahead)</strong>
+    </dt>
+    <dd>
+    Looks up the next expiring timer.
+ Note: traverses the wheel, O(n) operation!
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">max_ahead</span>
+         (optional) maximum time (in seconds)
+ to look ahead
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        number of seconds until next timer expires (can be negative), or
+ 'nil' if there is no timer from now to <code>max_ahead</code>
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"><span class="keyword">local</span> t = wheel:peek(<span class="number">10</span>)
+<span class="keyword">if</span> t <span class="keyword">then</span>
+  <span class="global">print</span>(<span class="string">"next timer expires in "</span>, t,<span class="string">" seconds"</span>)
+<span class="keyword">else</span>
+  <span class="global">print</span>(<span class="string">"no timer scheduled for the next 10 seconds"</span>)
+<span class="keyword">end</span></pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "wheel:set"></a>
+    <strong>wheel:set (expire_in, cb, arg)</strong>
+    </dt>
+    <dd>
+    Sets a timer.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">expire_in</span>
+         in how many seconds should the timer expire
+        </li>
+        <li><span class="parameter">cb</span>
+         callback function to execute upon expiring (NOTE: the
+ callback will run within an <a href="https://www.lua.org/manual/5.1/manual.html#pdf-xpcall">xpcall</a>)
+        </li>
+        <li><span class="parameter">arg</span>
+         parameter to be passed to <code>cb</code> when executing
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        id
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"><span class="keyword">local</span> cb = <span class="keyword">function</span>(arg)
+  <span class="global">print</span>(<span class="string">"timer executed with: "</span>, arg)  <span class="comment">--&gt; "timer executed with: hello world"
+</span><span class="keyword">end</span>
+<span class="keyword">local</span> id = wheel:set(<span class="number">5</span>, cb, <span class="string">"hello world"</span>)
+
+<span class="comment">-- do stuff here, while regularly calling <code>wheel:step()</code>
+</span>
+wheel:cancel(id)  <span class="comment">-- cancel the timer again</span></pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "wheel:step"></a>
+    <strong>wheel:step ()</strong>
+    </dt>
+    <dd>
+    Checks and executes timers.
+ Call this function (at least) every <code>precision</code> seconds.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+        <code>true</code>
+    </ol>
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+<i style="float:right;">Last updated 2018-12-08 19:55:34 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

@@ -1,0 +1,10 @@
+project='timerwheel.lua'
+title='timerwheel'
+description='Timers based on a timerwheel'
+format='markdown'
+file='./src/'
+dir='docs'
+readme='readme.md'
+sort=true
+sort_modules=true
+style='./docs/'
