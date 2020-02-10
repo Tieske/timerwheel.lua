@@ -1,11 +1,10 @@
 package = "timerwheel"
-version = "scm-1"
+version = "0.1.0-2"
 source = {
-  url = "https://github.com/Tieske/timerwheel.lua/archive/master.tar.gz",
-  dir = "timerwheel.lua-master",
-  --url = "git://github.com/Tieske/timerwheel.lua",
+  url = "https://github.com/Tieske/timerwheel.lua/archive/0.1.0.tar.gz",
+  dir = "timerwheel.lua-0.1.0",
   --tag = "0.1.0",
-  branch = "master",
+  --branch = "master",
 }
 description = {
   summary = "Timers based on a timerwheel",
@@ -25,4 +24,5 @@ build = {
   modules = {
     ["timerwheel.init"] = "src/timerwheel.lua",
   },
+  copy_directories = {"docs"}
 }
