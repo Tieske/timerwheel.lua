@@ -46,6 +46,10 @@ See [LICENSE](https://github.com/Tieske/timerwheel.lua/blob/master/LICENSE).
 History
 =======
 
+## 0.x.0 unreleased
+
+  - Added `count` method to retrieve the current number of active timers
+
 ## 0.1.0 released 01-Feb-2020
 
   - Initial released version

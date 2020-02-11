@@ -92,9 +92,11 @@ describe("Timerwheel", function()
       local count = 0
       local id = wheel:set(0.5, function() count = count + 1 end)
       assert.is.equal(-1, id)
+      assert.is.equal(1, wheel:count())
       set_time(1)
       wheel:step()
       assert.is.equal(1, count)
+      assert.is.equal(0, wheel:count())
     end)
 
 
@@ -377,11 +379,13 @@ describe("Timerwheel", function()
     it("removes a timer", function()
       local count = 0
       local id = wheel:set(0.5, function() count = count + 1 end)
+      assert.is.equal(1, wheel:count())
       assert.is.True(wheel:cancel(id))
 
       set_time(1)
       wheel:step()
       assert.is.equal(0, count)
+      assert.is.equal(0, wheel:count())
     end)
 
 

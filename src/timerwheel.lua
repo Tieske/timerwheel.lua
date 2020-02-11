@@ -146,6 +146,12 @@ function _M.new(opts)
     return true
   end
 
+  --- Gets the number of timers.
+  -- @return number of timers
+  function wheel:count()
+    return count
+  end
+
   --- Sets a timer.
   -- @param expire_in in how many seconds should the timer expire
   -- @param cb callback function to execute upon expiring (NOTE: the
