@@ -1,6 +1,6 @@
 local package_name = "timerwheel"
-local package_version = "scm"
-local rockspec_revision = "1"
+local package_version = "0.2.0"
+local rockspec_revision = "2"
 local github_account_name = "Tieske"
 local github_repo_name = package_name .. ".lua"
 
