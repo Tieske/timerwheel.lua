@@ -8,7 +8,7 @@ local github_repo_name = package_name .. ".lua"
 package = package_name
 version = package_version.."-"..rockspec_revision
 source = {
-  url = "git://github.com/"..github_account_name.."/"..github_repo_name..".git",
+  url = "git+https://github.com/"..github_account_name.."/"..github_repo_name..".git",
   branch = (package_version == "scm") and "master" or nil,
   tag = (package_version ~= "scm") and package_version or nil,
 }
@@ -29,5 +29,8 @@ build = {
   type = "builtin",
   modules = {
     ["timerwheel.init"] = "src/timerwheel/init.lua",
+  },
+  copy_directories = {
+    "docs",
   },
 }
