@@ -1,5 +1,6 @@
-[![Build Status](https://travis-ci.com/Tieske/timerwheel.lua.svg?branch=master)](https://travis-ci.com/Tieske/timerwheel.lua)
-[![Coverage Status](https://coveralls.io/repos/github/Tieske/timerwheel.lua/badge.svg?branch=master)](https://coveralls.io/github/Tieske/timerwheel.lua?branch=master)
+[![Unix build](https://img.shields.io/github/workflow/status/Tieske/timerwheel.lua/Unix%20build?label=Unix%20build&logo=linux)](https://github.com/Tieske/timerwheel.lua/actions/workflows/unix_build.yml)
+[![Coveralls code coverage](https://img.shields.io/coveralls/github/Tieske/timerwheel.lua?logo=coveralls)](https://coveralls.io/github/Tieske/timerwheel.lua)
+[![Lint](https://github.com/Tieske/timerwheel.lua/workflows/Lint/badge.svg)](https://github.com/Tieske/timerwheel.lua/actions/workflows/lint.yml)
 
 
 timerwheel.lua
