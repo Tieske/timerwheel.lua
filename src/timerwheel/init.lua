@@ -32,7 +32,7 @@ end
 
 local xpcall = require("coxpcall").xpcall
 local default_err_handler = function(err)
-  io.stderr:write(debug.traceback("TimerWheel callback failed with: " .. tostring(err)))
+  io.stderr:write(debug.traceback("TimerWheel callback failed with: " .. tostring(err)).."\n")
 end
 
 local math_floor = math.floor
