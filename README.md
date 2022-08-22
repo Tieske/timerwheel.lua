@@ -47,15 +47,34 @@ See [LICENSE](https://github.com/Tieske/timerwheel.lua/blob/master/LICENSE).
 History
 =======
 
+Versioning is strictly based on [Semantic Versioning](https://semver.org/).
+
+#### Releasing new versions
+
+- create a release branch
+- update the changelog below
+- update copyright-years in `./LICENSE`
+- create a new rockspec and update the version inside the new rockspec:<br/>
+  `cp timerwheel-scm-1.rockspec ./rockspecs/timerwheel-X.Y.Z-1.rockspec`
+- render the docs: run `ldoc .`
+- commit the changes as `release X.Y.Z`
+- push the commit, and create a release PR
+- after merging tag the release commit with `X.Y.Z`
+- upload to LuaRocks:<br/>
+  `luarocks upload ./rockspecs/timerwheel-X.Y.Z-1.rockspec --api-key=ABCDEFGH`
+- test the newly created rock:<br/>
+  `luarocks install timerwheel`
+
 ## 1.0.0 unreleased
 
-  - Fix: added a newline when writing errors to `stderr`, since `io.stderr:write()`
-    does not automatically do this like `print()` does.
+- Bump to 1.0 since API is stable
+- Fix: added a newline when writing errors to `stderr`, since `io.stderr:write()`
+  does not automatically do this like `print()` does.
 
 ## 0.2.0 released 11-Feb-2020
 
-  - Added `count` method to retrieve the current number of active timers
+- Added `count` method to retrieve the current number of active timers
 
 ## 0.1.0 released 01-Feb-2020
 
-  - Initial released version
+- Initial released version
