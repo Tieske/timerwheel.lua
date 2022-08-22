@@ -47,6 +47,11 @@ See [LICENSE](https://github.com/Tieske/timerwheel.lua/blob/master/LICENSE).
 History
 =======
 
+## 1.0.0 unreleased
+
+  - Fix: added a newline when writing errors to `stderr`, since `io.stderr:write()`
+    does not automatically do this like `print()` does.
+
 ## 0.2.0 released 11-Feb-2020
 
   - Added `count` method to retrieve the current number of active timers
