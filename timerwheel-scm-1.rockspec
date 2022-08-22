@@ -28,6 +28,6 @@ dependencies = {
 build = {
   type = "builtin",
   modules = {
-    ["timerwheel.init"] = "src/timerwheel.lua",
+    ["timerwheel.init"] = "src/timerwheel/init.lua",
   },
 }
