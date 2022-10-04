@@ -65,7 +65,7 @@ Versioning is strictly based on [Semantic Versioning](https://semver.org/).
 - test the newly created rock:<br/>
   `luarocks install timerwheel`
 
-## 1.0.x unreleased
+## 1.0.1 released 04-Oct-2022
 
 - Fix: if a slot was modified (by cancelling) a hole might appear in the table
   causing an xpcall with `nil` instead of the callback function

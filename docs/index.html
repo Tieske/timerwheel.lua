@@ -77,7 +77,7 @@
 	<td class="summary">Gets the number of timers.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#wheel:peek">wheel:peek (max_ahead)</a></td>
+	<td class="name" nowrap><a href="#wheel:peek">wheel:peek ([max_ahead])</a></td>
 	<td class="summary">Looks up the next expiring timer.</td>
 	</tr>
 	<tr>
@@ -102,34 +102,43 @@
     <strong>new (opts)</strong>
     </dt>
     <dd>
-
-<p>Creates a new timer wheel.
- The options are:</p>
-
-<ul>
-    <li><code>precision</code> (optional) precision of the timer wheel in seconds (slot size),
-    defaults to 0.050</li>
-    <li><code>ringsize</code> (optional) number of slots in each ring, defaults to 72000 (1
-    hour span, based on default <code>precision</code>)</li>
-    <li><code>now</code> (optional) a function returning the curent time in seconds. Defaults
-    to <code>luasocket.gettime</code> or <code>ngx.now</code> if available.</li>
-    <li><code>err_handler</code> (optional) a function to use as error handler in a <a href="https://www.lua.org/manual/5.1/manual.html#pdf-xpcall">xpcall</a> when
-    executing the callback. The default will send the stacktrace on <code>stderr</code>.</li>
-</ul>
-
-
+    Creates a new timer wheel.
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">opts</span>
-         the options table
+        <li><span class="parameter">opts</span> the options table
+        <ul>
+        <li><span class="parameter">precision</span>
+            <span class="types"><span class="type">number</span></span>
+         the precision of the timer wheel in seconds (slot size),
+         (<em>default</em> 0.050)
         </li>
+        <li><span class="parameter">ringsize</span>
+            <span class="types"><span class="type">int</span></span>
+         number of slots in each ring, defaults to 72000 (1
+ hour span, with <code>precision == 0.050</code>)
+         (<em>optional</em>)
+        </li>
+        <li><span class="parameter">now</span>
+            <span class="types"><span class="type">function</span></span>
+         a function returning the curent time in seconds. Defaults
+ to <code>ngx.now</code> or <code>luasocket.gettime</code> if available.
+         (<em>optional</em>)
+        </li>
+        <li><span class="parameter">err_handler</span>
+            <span class="types"><span class="type">function</span></span>
+         a function to use as error handler in an <a href="https://www.lua.org/manual/5.1/manual.html#pdf-xpcall">xpcall</a> when
+ executing the callback. The default will write the stacktrace to <code>stderr</code>.
+         (<em>optional</em>)
+        </li>
+        </li></ul>
     </ul>
 
     <h3>Returns:</h3>
     <ol>
 
+           <span class="types"><span class="type">wheel</span></span>
         the timerwheel object
     </ol>
 
@@ -148,6 +157,7 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">id</span>
+            <span class="types"><span class="type">int</span></span>
          the timer id to cancel
         </li>
     </ul>
@@ -155,6 +165,7 @@
     <h3>Returns:</h3>
     <ol>
 
+           <span class="types"><span class="type">boolean</span></span>
         <code>true</code> if cancelled, <code>false</code> if not found
     </ol>
 
@@ -174,6 +185,7 @@
     <h3>Returns:</h3>
     <ol>
 
+           <span class="types"><span class="type">int</span></span>
         number of timers
     </ol>
 
@@ -183,7 +195,7 @@
 </dd>
     <dt>
     <a name = "wheel:peek"></a>
-    <strong>wheel:peek (max_ahead)</strong>
+    <strong>wheel:peek ([max_ahead])</strong>
     </dt>
     <dd>
     Looks up the next expiring timer.
@@ -193,14 +205,17 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">max_ahead</span>
-         (optional) maximum time (in seconds)
+            <span class="types"><span class="type">number</span></span>
+         maximum time (in seconds)
  to look ahead
+         (<em>optional</em>)
         </li>
     </ul>
 
     <h3>Returns:</h3>
     <ol>
 
+           <span class="types"><span class="type">number</span></span>
         number of seconds until next timer expires (can be negative), or
  'nil' if there is no timer from now to <code>max_ahead</code>
     </ol>
@@ -229,9 +244,11 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">expire_in</span>
+            <span class="types"><span class="type">number</span></span>
          in how many seconds should the timer expire
         </li>
         <li><span class="parameter">cb</span>
+            <span class="types"><span class="type">function</span></span>
          callback function to execute upon expiring (NOTE: the
  callback will run within an <a href="https://www.lua.org/manual/5.1/manual.html#pdf-xpcall">xpcall</a>)
         </li>
@@ -243,7 +260,8 @@
     <h3>Returns:</h3>
     <ol>
 
-        id
+           <span class="types"><span class="type">int</span></span>
+        the id of the newly set timer
     </ol>
 
 
@@ -288,7 +306,7 @@ wheel:cancel(id)  <span class="comment">-- cancel the timer again</span></pre>
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2022-08-22 11:30:55 </i>
+<i style="float:right;">Last updated 2022-10-04 13:20:25 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>
