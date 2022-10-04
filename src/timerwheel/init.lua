@@ -229,7 +229,9 @@ function _M.new(opts)
       slot.ids[id] = nil
       slot.arg[id] = nil
       local n = slot.n
-      slot[idx] = slot[n]
+      local moved_id = slot[n]
+      slot[idx] = moved_id
+      slot[moved_id] = idx
       slot[n] = nil
       slot.n = n - 1
       id_list[id] = nil
