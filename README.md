@@ -31,7 +31,7 @@ Tests
 =====
 
 Tests are in the `spec` folder and can be executed using the
-[busted test framework](http://olivine-labs.github.io/busted/). Just run
+[busted test framework](https://lunarmodules.github.io/busted/). Just run
 `"busted"` from the repo.
 
 Besides that `luacheck` is configured for linting, just run `"luacheck ."` from
