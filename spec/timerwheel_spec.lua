@@ -395,6 +395,27 @@ describe("Timerwheel", function()
     end)
 
 
+    it("removes timers, leaving holes in the slot", function()
+      local called = {}
+      local id1 = wheel:set(0.5, function(arg) called[#called+1] = arg end, "id1")
+      local _   = wheel:set(0.5, function(arg) called[#called+1] = arg end, "id2")
+      local id3 = wheel:set(0.5, function(arg) called[#called+1] = arg end, "id3")
+      local _   = wheel:set(0.5, function(arg) called[#called+1] = arg end, "id4")
+      local id5 = wheel:set(0.5, function(arg) called[#called+1] = arg end, "id5")
+      assert.is.equal(5, wheel:count())
+      assert.is.True(wheel:cancel(id1))
+      assert.is.True(wheel:cancel(id3))
+      assert.is.True(wheel:cancel(id5))
+
+      set_time(1)
+      wheel:step()
+
+      table.sort(called)
+      assert.is.equal(2, #called)
+      assert.is.same({ "id2", "id4" }, called)
+    end)
+
+
     it("callback and args gets GC'ed after cancelling", function()
       local count = 0
       local cb = function() count = count + 1 end
