@@ -166,6 +166,11 @@ describe("Timerwheel", function()
         wheel:step()
         assert.is.equal(i, count)
       end
+      -- check reused tables
+      assert.equal(10, #wheel._tables)
+      for _, t in ipairs(wheel._tables) do
+        assert.same({ arg = {}, ids = {}, n = 0 }, t)
+      end
     end)
 
 
@@ -386,6 +391,10 @@ describe("Timerwheel", function()
       wheel:step()
       assert.is.equal(0, count)
       assert.is.equal(0, wheel:count())
+
+      -- check reusable tables
+      assert.equal(1, #wheel._tables)
+      assert.same({ arg = {}, ids = {}, n = 0 }, wheel._tables[1])
     end)
 
 
@@ -413,6 +422,10 @@ describe("Timerwheel", function()
       table.sort(called)
       assert.is.equal(2, #called)
       assert.is.same({ "id2", "id4" }, called)
+
+      -- check reused tables
+      assert.equal(1, #wheel._tables)
+      assert.same({ arg = {}, ids = {}, n = 0 }, wheel._tables[1])
     end)
 
 
