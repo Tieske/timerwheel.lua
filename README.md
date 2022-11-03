@@ -65,9 +65,9 @@ Versioning is strictly based on [Semantic Versioning](https://semver.org/).
 - test the newly created rock:<br/>
   `luarocks install timerwheel`
 
-## unreleased
+## 1.0.2 released 03-Nov-2022
 
-- Fix: memory leak, occasionally ID's were not removed. Causing a mmeory leak in
+- Fix: memory leak, occasionally ID's were not removed. Causing a memory leak in
   long running processes
 
 ## 1.0.1 released 04-Oct-2022
