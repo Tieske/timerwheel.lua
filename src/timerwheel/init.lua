@@ -225,9 +225,11 @@ function _M.new(opts)
       slot.ids[id] = nil
       slot.arg[id] = nil
       local n = slot.n
-      local moved_id = slot[n]
-      slot[idx] = moved_id
-      slot[moved_id] = idx
+      if idx ~= n then
+        local moved_id = slot[n]
+        slot[idx] = moved_id
+        slot[moved_id] = idx
+      end
       slot[n] = nil
       slot.n = n - 1
       id_list[id] = nil
@@ -292,9 +294,10 @@ function _M.new(opts)
     return nil
   end
 
---  if _G._TEST then   -- export test variables only when testing
---    wheel._rings = rings
---  end
+  if _G._TEST then   -- export test variables only when testing
+    -- wheel._rings = rings
+    wheel._tables = tables
+  end
 
   return wheel
 end
