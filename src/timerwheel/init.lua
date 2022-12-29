@@ -106,6 +106,8 @@ function _M.new(opts)
         -- current ring is done, remove it and forward pointers
         for i = 1, rings_n do
           -- manual loop, since table.remove won't deal with holes
+          -- FIXME: If there are a large number of rings, then this loop becomes
+          -- a "stop the world" event.
           rings[i] = rings[i + 1]
         end
         rings_n = rings_n - 1
