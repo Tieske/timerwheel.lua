@@ -1,4 +1,4 @@
-[![Unix build](https://img.shields.io/github/workflow/status/Tieske/timerwheel.lua/Unix%20build?label=Unix%20build&logo=linux)](https://github.com/Tieske/timerwheel.lua/actions/workflows/unix_build.yml)
+[![Unix build](https://img.shields.io/github/actions/workflow/status/Tieske/timerwheel.lua/unix_build.yml?branch=master&label=Unix%20build&logo=linux)](https://github.com/Tieske/timerwheel.lua/actions/workflows/unix_build.yml)
 [![Coveralls code coverage](https://img.shields.io/coveralls/github/Tieske/timerwheel.lua?logo=coveralls)](https://coveralls.io/github/Tieske/timerwheel.lua)
 [![Lint](https://github.com/Tieske/timerwheel.lua/workflows/Lint/badge.svg)](https://github.com/Tieske/timerwheel.lua/actions/workflows/lint.yml)
 
