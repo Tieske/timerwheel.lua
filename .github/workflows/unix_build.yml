@@ -1,25 +1,41 @@
 name: "Unix build"
 
-on: [push, pull_request]
+concurrency:
+  # for PR's cancel the running task, if another commit is pushed
+  group: ${{ github.workflow }} ${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+on:
+  # build on PR and push-to-main. This works for short-lived branches, and saves
+  # CPU cycles on duplicated tests.
+  # For long-lived branches that diverge, you'll want to run on all pushes, not
+  # just on push-to-main.
+  pull_request: {}
+  push:
+    branches:
+    - master
+
 
 jobs:
   test:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
 
     strategy:
       fail-fast: false
       matrix:
-        luaVersion: ["5.1", "5.2", "5.3", "5.4", "luajit-2.1.0-beta3", "luajit-openresty"]
+        luaVersion: ["5.1", "5.2", "5.3", "5.4", "5.5", "luajit-2.1.0-beta3", "luajit-openresty"]
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - uses: leafo/gh-actions-lua@v8
+      - uses: luarocks/gh-actions-lua@master
         with:
           luaVersion: ${{ matrix.luaVersion }}
 
-      - uses: leafo/gh-actions-luarocks@v4
+      - uses: luarocks/gh-actions-luarocks@master
+        with:
+          luaRocksVersion: "3.13.0"
 
       - name: test dependencies
         run: |
